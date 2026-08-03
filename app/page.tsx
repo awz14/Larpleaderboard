@@ -6,18 +6,18 @@ const BAD_WORDS = ['admin', 'mod', 'support', 'fuck', 'shit', 'bitch', 'asshole'
 
 const ACCESSORIES_CATALOG = {
   titles: [
-    { id: 'title_rookie', name: 'ROOKIE', threshold: 0, style: 'text-gray-400 bg-gray-900 border-gray-800 font-semibold tracking-wider text-[9px]' },
-    { id: 'title_verified', name: 'VERIFIED', threshold: 5000, style: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20 font-bold tracking-wider text-[9px]' },
-    { id: 'title_roller', name: 'HIGH ROLLER', threshold: 10000, style: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20 font-bold tracking-wider text-[9px]' },
-    { id: 'title_master', name: 'FLEX MASTER', threshold: 25000, style: 'text-purple-400 bg-purple-500/10 border-purple-500/20 font-bold tracking-wider text-[9px]' },
-    { id: 'title_pro', name: 'PRO LARPER', threshold: 50000, style: 'text-amber-400 bg-amber-500/10 border-amber-500/20 font-bold tracking-wider text-[9px]' },
-    { id: 'title_illuminati', name: 'ILLUMINATI', threshold: 100000, style: 'text-rose-400 bg-rose-500/10 border-rose-500/20 font-extrabold tracking-wider text-[9px]' },
+    { id: 'title_rookie', name: 'ROOKIE', threshold: 0, style: 'text-gray-400 bg-white/5 border-white/10 font-semibold tracking-wider text-[10px] backdrop-blur-sm' },
+    { id: 'title_verified', name: 'VERIFIED', threshold: 5000, style: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20 font-bold tracking-wider text-[10px] backdrop-blur-sm shadow-[0_0_15px_rgba(16,185,129,0.15)]' },
+    { id: 'title_roller', name: 'HIGH ROLLER', threshold: 10000, style: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20 font-bold tracking-wider text-[10px] backdrop-blur-sm shadow-[0_0_15px_rgba(6,182,212,0.15)]' },
+    { id: 'title_master', name: 'FLEX MASTER', threshold: 25000, style: 'text-purple-400 bg-purple-500/10 border-purple-500/20 font-bold tracking-wider text-[10px] backdrop-blur-sm shadow-[0_0_15px_rgba(168,85,247,0.15)]' },
+    { id: 'title_pro', name: 'PRO LARPER', threshold: 50000, style: 'text-amber-400 bg-amber-500/10 border-amber-500/20 font-bold tracking-wider text-[10px] backdrop-blur-sm shadow-[0_0_15px_rgba(245,158,11,0.15)]' },
+    { id: 'title_illuminati', name: 'ILLUMINATI', threshold: 100000, style: 'text-rose-400 bg-rose-500/10 border-rose-500/20 font-extrabold tracking-wider text-[10px] backdrop-blur-sm shadow-[0_0_20px_rgba(244,63,94,0.2)]' },
   ],
   borders: [
-    { id: 'border_standard', name: 'Classic Dark', threshold: 0, style: 'border-gray-800/80 bg-gray-900/60 backdrop-blur' },
-    { id: 'border_emerald', name: 'Emerald Glow', threshold: 5000, style: 'border-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.1)] bg-gradient-to-r from-gray-900 via-gray-900 to-emerald-950/20' },
-    { id: 'border_blue', name: 'Electric Cyan', threshold: 15000, style: 'border-cyan-500/40 shadow-[0_0_20px_rgba(6,182,212,0.1)] bg-gradient-to-r from-gray-900 via-gray-900 to-cyan-950/20' },
-    { id: 'border_gold', name: 'Solar Gold', threshold: 50000, style: 'border-amber-500/50 shadow-[0_0_25px_rgba(245,158,11,0.15)] bg-gradient-to-r from-gray-900 via-gray-900 to-amber-950/20' },
+    { id: 'border_standard', name: 'Classic Dark', threshold: 0, style: 'border-white/10 bg-white/5 backdrop-blur-xl' },
+    { id: 'border_emerald', name: 'Emerald Glow', threshold: 5000, style: 'border-emerald-500/30 shadow-[0_0_30px_rgba(16,185,129,0.15)] bg-gradient-to-r from-emerald-950/20 via-transparent to-emerald-950/20 backdrop-blur-xl' },
+    { id: 'border_blue', name: 'Electric Cyan', threshold: 15000, style: 'border-cyan-500/30 shadow-[0_0_30px_rgba(6,182,212,0.15)] bg-gradient-to-r from-cyan-950/20 via-transparent to-cyan-950/20 backdrop-blur-xl' },
+    { id: 'border_gold', name: 'Solar Gold', threshold: 50000, style: 'border-amber-500/40 shadow-[0_0_35px_rgba(245,158,11,0.2)] bg-gradient-to-r from-amber-950/20 via-transparent to-amber-950/20 backdrop-blur-xl' },
   ],
 };
 
@@ -352,67 +352,74 @@ export default function Leaderboard() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-950 text-gray-100 p-6 md:p-12 font-sans selection:bg-green-500 selection:text-black [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <main className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-gray-100 p-6 md:p-12 font-sans selection:bg-emerald-500/20 selection:text-emerald-300 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden relative overflow-hidden">
       
+      {/* Background gradient orbs */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-3xl"></div>
+      </div>
+
       {/* ACTIVE ANNOUNCEMENT BANNER */}
       {activeBanner && (
         <div 
           onClick={() => setIsNewsOpen(true)}
-          className="max-w-3xl mx-auto mb-6 bg-gradient-to-r from-emerald-500/10 via-green-500/10 to-emerald-500/10 border border-emerald-500/30 px-4 py-3 rounded-xl text-center text-xs md:text-sm font-semibold text-emerald-300 cursor-pointer hover:border-emerald-500/50 transition shadow-lg backdrop-blur"
+          className="max-w-4xl mx-auto mb-8 glass-strong bg-gradient-to-r from-emerald-500/15 via-transparent to-emerald-500/15 border-emerald-500/30 px-6 py-4 rounded-2xl text-center text-sm md:text-base font-semibold text-emerald-300 cursor-pointer hover:border-emerald-500/50 transition-all duration-300 hover:scale-[1.01] shadow-2xl animate-gradient"
         >
-          <span className="font-bold text-emerald-400 uppercase tracking-wider mr-2">[ ANNOUNCEMENT ]</span>
-          <span className="underline">{activeBanner.title}</span> — {activeBanner.content} <span className="text-[11px] opacity-75 font-normal">(Click for news history)</span>
+          <span className="font-bold text-emerald-400 uppercase tracking-widest mr-3 text-xs">📢 Announcement</span>
+          <span className="underline decoration-emerald-500/50 underline-offset-4">{activeBanner.title}</span> — {activeBanner.content} <span className="text-xs opacity-70 font-normal ml-2">(Click for news history)</span>
         </div>
       )}
 
       {/* USER VIP VERIFICATION STATUS BANNER (£250+) */}
       {userProfile && userSpent >= 25000 && (
-        <div className="max-w-3xl mx-auto mb-6">
+        <div className="max-w-4xl mx-auto mb-8">
           {userProfile.verification_status === 'pending' && (
-            <div className="bg-amber-500/10 border border-amber-500/30 text-amber-300 p-3.5 rounded-xl text-center text-xs font-semibold shadow-md">
-              Your £250+ VIP account links are currently pending Admin verification.
+            <div className="glass bg-amber-500/10 border-amber-500/30 text-amber-300 p-4 rounded-2xl text-center text-sm font-semibold shadow-xl">
+              ⏳ Your £250+ VIP account links are currently pending Admin verification.
             </div>
           )}
           {userProfile.verification_status === 'rejected' && (
             <div 
               onClick={openEditModal}
-              className="bg-rose-500/10 border border-rose-500/30 text-rose-300 p-3.5 rounded-xl text-center text-xs font-semibold cursor-pointer hover:bg-rose-500/20 transition shadow-md"
+              className="glass bg-rose-500/10 border-rose-500/30 text-rose-300 p-4 rounded-2xl text-center text-sm font-semibold cursor-pointer hover:bg-rose-500/20 transition-all duration-300 hover:scale-[1.01] shadow-xl"
             >
-              Action Required on VIP Links: {userProfile.admin_feedback || 'Please update your links.'} <span className="underline font-bold">(Click here to edit & resubmit)</span>
+              ⚠️ Action Required on VIP Links: {userProfile.admin_feedback || 'Please update your links.'} <span className="underline decoration-rose-500/50 underline-offset-4 font-bold">(Click here to edit & resubmit)</span>
             </div>
           )}
           {userProfile.verification_status === 'approved' && (
-            <div className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 p-3 rounded-xl text-center text-xs font-medium shadow-md">
-              VIP £250+ Account & Links Fully Verified
+            <div className="glass bg-emerald-500/10 border-emerald-500/30 text-emerald-300 p-4 rounded-2xl text-center text-sm font-medium shadow-xl animate-pulse-glow">
+              ✅ VIP £250+ Account & Links Fully Verified
             </div>
           )}
         </div>
       )}
 
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-4xl mx-auto relative z-10">
         
         {/* TOP NAVBAR */}
-        <header className="flex justify-between items-center mb-12 pb-6 border-b border-gray-800/80">
-          <div className="text-xl font-black tracking-widest text-green-400">
+        <header className="flex justify-between items-center mb-16 pb-8 border-b border-white/10">
+          <div className="text-2xl font-black tracking-[0.2em] text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
             LARP<span className="text-white">BOARD</span>
           </div>
 
           <div>
             {user ? (
-              <div className="flex items-center gap-2 md:gap-3 bg-gray-900/90 border border-gray-800 px-3.5 py-1.5 rounded-full shadow-xl backdrop-blur">
+              <div className="flex items-center gap-2 md:gap-3 glass-strong px-4 py-2 rounded-full shadow-2xl">
                 <img 
                   src={user.user_metadata?.avatar_url || `https://api.dicebear.com/7.x/bottts/svg?seed=${user.email}`} 
                   alt="Avatar" 
-                  className="w-7 h-7 rounded-full object-cover border border-gray-700"
+                  className="w-8 h-8 rounded-full object-cover border border-white/20 shadow-lg"
                 />
-                <span className="text-xs md:text-sm font-semibold text-gray-200 hidden sm:inline">
+                <span className="text-sm font-semibold text-gray-200 hidden sm:inline">
                   {user.user_metadata?.full_name || user.email}
                 </span>
 
                 {isAdmin && (
                   <a 
                     href="/admin"
-                    className="text-[11px] bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 px-3 py-1 rounded-full border border-rose-500/30 transition font-bold tracking-wide"
+                    className="text-xs bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 px-3 py-1.5 rounded-full border border-rose-500/30 transition-all duration-300 font-bold tracking-wide"
                   >
                     Admin
                   </a>
@@ -420,43 +427,43 @@ export default function Leaderboard() {
 
                 <button 
                   onClick={() => setIsNewsOpen(true)}
-                  className="text-[11px] bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1 rounded-full border border-gray-700 transition font-medium"
+                  className="text-xs bg-white/5 hover:bg-white/10 text-gray-300 px-3 py-1.5 rounded-full border border-white/10 transition-all duration-300 font-medium"
                 >
                   News
                 </button>
                 
                 <button 
                   onClick={() => setIsLockerOpen(true)}
-                  className="text-[11px] bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 px-3 py-1 rounded-full border border-amber-500/30 transition font-bold"
+                  className="text-xs bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 px-3 py-1.5 rounded-full border border-amber-500/30 transition-all duration-300 font-bold"
                 >
                   Accessories
                 </button>
 
                 <button 
                   onClick={openEditModal}
-                  className="text-[11px] bg-gray-800 hover:bg-gray-700 text-green-400 px-3 py-1 rounded-full border border-gray-700 transition font-bold"
+                  className="text-xs bg-white/5 hover:bg-white/10 text-emerald-400 px-3 py-1.5 rounded-full border border-white/10 transition-all duration-300 font-bold"
                 >
                   Edit Profile
                 </button>
 
                 <button 
                   onClick={handleSignOut}
-                  className="text-[11px] bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white px-3 py-1 rounded-full transition font-medium"
+                  className="text-xs bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white px-3 py-1.5 rounded-full border border-white/10 transition-all duration-300 font-medium"
                 >
                   Sign Out
                 </button>
               </div>
             ) : (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
                 <button 
                   onClick={() => handleOAuthLogin('google')}
-                  className="bg-white hover:bg-gray-200 text-gray-950 font-bold text-xs px-4 py-2 rounded-full transition shadow-md"
+                  className="bg-white hover:bg-gray-100 text-gray-950 font-bold text-xs px-5 py-2.5 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
                 >
                   Google
                 </button>
                 <button 
                   onClick={() => handleOAuthLogin('discord')}
-                  className="bg-[#5865F2] hover:bg-[#4752C4] text-white font-bold text-xs px-4 py-2 rounded-full transition shadow-md"
+                  className="bg-[#5865F2] hover:bg-[#4752C4] text-white font-bold text-xs px-5 py-2.5 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
                 >
                   Discord
                 </button>
@@ -466,58 +473,60 @@ export default function Leaderboard() {
         </header>
 
         {/* HERO TITLE */}
-        <div className="text-center mb-10">
-          <h1 className="text-4xl md:text-6xl font-black mb-3 text-green-400 uppercase tracking-tight">
+        <div className="text-center mb-12">
+          <h1 className="text-5xl md:text-7xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 uppercase tracking-tight animate-gradient">
             LarpLeaderboard
           </h1>
-          <p className="text-sm md:text-base text-gray-400 font-medium">Buy your spot. Flex your link.</p>
+          <p className="text-base md:text-lg text-gray-400 font-medium tracking-wide">Buy your spot. Flex your link.</p>
         </div>
         
         {/* CHECKOUT SECTION */}
-        <div className="bg-gray-900/60 border border-gray-800/80 p-6 md:p-8 rounded-2xl mb-12 flex flex-col items-center shadow-2xl backdrop-blur">
-          <h2 className="text-lg font-bold mb-4 text-gray-200">Claim Your Spot</h2>
+        <div className="glass-strong p-8 md:p-10 rounded-3xl mb-16 flex flex-col items-center shadow-2xl animate-gradient">
+          <h2 className="text-xl font-bold mb-6 text-gray-200 tracking-wide">Claim Your Spot</h2>
           
-          <div className="flex gap-3 w-full max-w-sm mb-4">
+          <div className="flex gap-4 w-full max-w-md mb-6">
             <div className="relative w-full">
-              <span className="absolute left-4 top-3.5 text-gray-400 font-bold">£</span>
+              <span className="absolute left-5 top-4 text-gray-400 font-bold text-lg">£</span>
               <input 
                 type="number" 
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                className="w-full bg-gray-950 border border-gray-800 text-white rounded-xl py-3 pl-8 pr-4 font-bold focus:outline-none focus:border-green-400 transition [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                className="w-full bg-black/30 border border-white/10 text-white rounded-2xl py-4 pl-10 pr-5 font-bold text-lg focus:outline-none focus:border-emerald-400/50 focus:ring-2 focus:ring-emerald-400/20 transition-all duration-300 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 min="1"
               />
             </div>
             <button 
               onClick={handleCheckout}
               disabled={loading}
-              className="bg-green-500 hover:bg-green-400 text-gray-950 font-extrabold px-6 py-3 rounded-xl transition shadow-lg whitespace-nowrap disabled:opacity-50"
+              className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-gray-950 font-extrabold px-8 py-4 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-emerald-500/25 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105"
             >
               {loading ? 'Processing...' : 'Pay Now'}
             </button>
           </div>
 
-          <div className="flex gap-2 text-xs font-bold flex-wrap justify-center">
-            <button onClick={() => addAmount(10)} className="bg-gray-800/80 hover:bg-gray-800 px-3 py-1.5 rounded-lg border border-gray-700/60 transition text-gray-300">
+          <div className="flex gap-3 text-xs font-bold flex-wrap justify-center">
+            <button onClick={() => addAmount(10)} className="bg-white/5 hover:bg-white/10 px-4 py-2 rounded-xl border border-white/10 transition-all duration-300 text-gray-300 hover:text-white hover:scale-105">
               +£10
             </button>
-            <button onClick={() => addAmount(50)} className="bg-gray-800/80 hover:bg-gray-800 px-3 py-1.5 rounded-lg border border-gray-700/60 transition text-gray-300">
+            <button onClick={() => addAmount(50)} className="bg-white/5 hover:bg-white/10 px-4 py-2 rounded-xl border border-white/10 transition-all duration-300 text-gray-300 hover:text-white hover:scale-105">
               +£50
             </button>
-            <button onClick={() => addAmount(100)} className="bg-gray-800/80 hover:bg-gray-800 px-3 py-1.5 rounded-lg border border-gray-700/60 transition text-gray-300">
+            <button onClick={() => addAmount(100)} className="bg-white/5 hover:bg-white/10 px-4 py-2 rounded-xl border border-white/10 transition-all duration-300 text-gray-300 hover:text-white hover:scale-105">
               +£100
             </button>
-            <button onClick={() => addAmount(500)} className="bg-gray-800/80 hover:bg-gray-800 text-green-400 px-3 py-1.5 rounded-lg border border-green-500/30 transition">
+            <button onClick={() => addAmount(500)} className="bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 px-4 py-2 rounded-xl border border-amber-500/30 transition-all duration-300 hover:scale-105 shadow-[0_0_15px_rgba(245,158,11,0.1)]">
               +£500 WHALE
             </button>
           </div>
         </div>
 
         {/* THE LEADERBOARD */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           {profiles.length === 0 ? (
-            <div className="text-center text-gray-500 font-semibold p-12 border border-dashed border-gray-800 rounded-2xl bg-gray-900/20">
-              No one is on the board yet. Be the first.
+            <div className="glass text-center text-gray-500 font-semibold p-16 border border-dashed border-white/10 rounded-3xl">
+              <div className="text-4xl mb-4">🏆</div>
+              <div className="text-lg">No one is on the board yet.</div>
+              <div className="text-sm text-gray-600 mt-2">Be the first to claim your spot.</div>
             </div>
           ) : (
             profiles.map((profile, index) => {
@@ -530,35 +539,35 @@ export default function Leaderboard() {
                 <div 
                   key={profile.id} 
                   onClick={() => setSelectedProfile(profile)}
-                  className={`p-4 rounded-xl border flex justify-between items-center transition-all cursor-pointer group hover:border-gray-600 ${currentBorder.style}`}
+                  className={`p-5 rounded-2xl border flex justify-between items-center transition-all duration-300 cursor-pointer group hover:scale-[1.02] hover:shadow-2xl ${currentBorder.style}`}
                 >
-                  <div className="flex items-center gap-4">
-                    <span className={`text-xl md:text-2xl font-black w-8 text-center ${index === 0 ? 'text-amber-400' : index === 1 ? 'text-gray-300' : index === 2 ? 'text-amber-600' : 'text-gray-600'}`}>
+                  <div className="flex items-center gap-5">
+                    <span className={`text-2xl md:text-3xl font-black w-10 text-center ${index === 0 ? 'text-amber-400 drop-shadow-[0_0_10px_rgba(251,191,36,0.5)]' : index === 1 ? 'text-gray-300' : index === 2 ? 'text-amber-600' : 'text-gray-600'}`}>
                       #{index + 1}
                     </span>
                     
                     <img 
                       src={avatarUrl} 
                       alt="Avatar" 
-                      className="w-12 h-12 rounded-full bg-gray-900 border border-gray-700 object-cover shadow-md"
+                      className="w-14 h-14 rounded-full bg-black/30 border border-white/20 object-cover shadow-xl group-hover:shadow-2xl transition-all duration-300"
                     />
 
                     <div>
-                      <div className="flex items-center gap-2.5 flex-wrap">
-                        <h2 className="text-base md:text-lg font-bold text-gray-100 group-hover:text-green-400 transition-colors">
+                      <div className="flex items-center gap-3 flex-wrap">
+                        <h2 className="text-lg md:text-xl font-bold text-gray-100 group-hover:text-emerald-400 transition-colors">
                           {profile.is_anonymous ? 'Anonymous' : profile.display_name}
                         </h2>
-                        <span className={`px-2 py-0.5 rounded border uppercase tracking-wider ${currentTitle.style}`}>
+                        <span className={`px-3 py-1 rounded-lg border uppercase tracking-wider ${currentTitle.style}`}>
                           {currentTitle.name}
                         </span>
                       </div>
-                      <p className="text-xs text-gray-400 line-clamp-1 mt-0.5 font-normal">
+                      <p className="text-sm text-gray-400 line-clamp-1 mt-1 font-normal">
                         {profile.approved_bio || 'No bio set yet.'}
                       </p>
                     </div>
                   </div>
 
-                  <span className="text-lg md:text-xl font-black text-white tracking-tight">
+                  <span className="text-xl md:text-2xl font-black text-white tracking-tight group-hover:text-emerald-400 transition-colors">
                     £{((profile.total_spent || 0) / 100).toFixed(2)}
                   </span>
                 </div>
@@ -570,29 +579,29 @@ export default function Leaderboard() {
 
       {/* ANNOUNCEMENT NEWS FEED MODAL */}
       {isNewsOpen && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-gray-900 border border-gray-800 w-full max-w-lg rounded-2xl p-6 shadow-2xl relative max-h-[85vh] overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <div className="flex justify-between items-center mb-6 border-b border-gray-800 pb-4">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
+          <div className="glass-strong w-full max-w-lg rounded-3xl p-8 shadow-2xl relative max-h-[85vh] overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex justify-between items-center mb-8 border-b border-white/10 pb-6">
               <div>
-                <h3 className="text-lg font-black text-white">Announcements Feed</h3>
-                <p className="text-xs text-gray-400 font-medium">Past and current updates from administration.</p>
+                <h3 className="text-2xl font-black text-white">Announcements Feed</h3>
+                <p className="text-sm text-gray-400 font-medium mt-1">Past and current updates from administration.</p>
               </div>
-              <button onClick={() => setIsNewsOpen(false)} className="text-gray-400 hover:text-white font-bold p-1">✕</button>
+              <button onClick={() => setIsNewsOpen(false)} className="text-gray-400 hover:text-white font-bold p-2 text-xl transition-colors">✕</button>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-4">
               {announcements.length === 0 ? (
-                <div className="text-center text-gray-500 text-sm py-6">No announcements posted yet.</div>
+                <div className="text-center text-gray-500 text-sm py-8">No announcements posted yet.</div>
               ) : (
                 announcements.map((item) => (
-                  <div key={item.id} className="bg-gray-950/80 border border-gray-800/80 p-4 rounded-xl">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <h4 className="font-bold text-white text-sm">{item.title}</h4>
-                      <span className="text-[10px] text-gray-500 font-semibold">
+                  <div key={item.id} className="glass bg-black/30 border border-white/10 p-5 rounded-2xl hover:border-white/20 transition-all duration-300">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="font-bold text-white text-base">{item.title}</h4>
+                      <span className="text-xs text-gray-500 font-semibold">
                         {new Date(item.created_at).toLocaleDateString()}
                       </span>
                     </div>
-                    <p className="text-xs text-gray-300 leading-relaxed font-normal">{item.content}</p>
+                    <p className="text-sm text-gray-300 leading-relaxed font-normal">{item.content}</p>
                   </div>
                 ))
               )}
@@ -603,33 +612,33 @@ export default function Leaderboard() {
 
       {/* ACCESSORIES LOCKER MODAL */}
       {isLockerOpen && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-gray-900 border border-gray-800 w-full max-w-lg rounded-2xl p-6 shadow-2xl relative max-h-[85vh] overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <div className="flex justify-between items-center mb-6 border-b border-gray-800 pb-4">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
+          <div className="glass-strong w-full max-w-lg rounded-3xl p-8 shadow-2xl relative max-h-[85vh] overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex justify-between items-center mb-8 border-b border-white/10 pb-6">
               <div>
-                <h3 className="text-lg font-black text-white">Accessories Locker</h3>
-                <p className="text-xs text-gray-400 font-medium">Total Spent: £{(userSpent / 100).toFixed(2)}</p>
+                <h3 className="text-2xl font-black text-white">Accessories Locker</h3>
+                <p className="text-sm text-gray-400 font-medium mt-1">Total Spent: £{(userSpent / 100).toFixed(2)}</p>
               </div>
-              <button onClick={() => setIsLockerOpen(false)} className="text-gray-400 hover:text-white font-bold p-1">✕</button>
+              <button onClick={() => setIsLockerOpen(false)} className="text-gray-400 hover:text-white font-bold p-2 text-xl transition-colors">✕</button>
             </div>
 
             {/* SECTION 1: TITLE BADGES */}
-            <div className="mb-6">
-              <h4 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-3">Title Badges</h4>
-              <div className="space-y-2">
+            <div className="mb-8">
+              <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Title Badges</h4>
+              <div className="space-y-3">
                 {ACCESSORIES_CATALOG.titles.map((item) => {
                   const isUnlocked = userSpent >= item.threshold;
                   const neededGBP = ((item.threshold - userSpent) / 100).toFixed(2);
                   const isEquipped = equippedTitleId === item.id;
 
                   return (
-                    <div key={item.id} className="bg-gray-950/80 border border-gray-800/80 p-3 rounded-xl flex items-center justify-between">
+                    <div key={item.id} className="glass bg-black/30 border border-white/10 p-4 rounded-2xl flex items-center justify-between hover:border-white/20 transition-all duration-300">
                       <div>
-                        <span className={`px-2.5 py-1 rounded border uppercase tracking-wider ${item.style}`}>
+                        <span className={`px-3 py-1.5 rounded-lg border uppercase tracking-wider ${item.style}`}>
                           {item.name}
                         </span>
-                        <span className="block text-[11px] text-gray-500 font-medium mt-1.5">
-                          {isUnlocked ? 'Unlocked' : `Spend £${neededGBP} more to unlock`}
+                        <span className="block text-xs text-gray-500 font-medium mt-2">
+                          {isUnlocked ? '✅ Unlocked' : `🔒 Spend £${neededGBP} more to unlock`}
                         </span>
                       </div>
 
@@ -637,16 +646,16 @@ export default function Leaderboard() {
                         <button
                           onClick={() => handleEquipAccessory('title', item.id)}
                           disabled={isEquipped}
-                          className={`text-xs font-bold px-4 py-2 rounded-lg transition ${
+                          className={`text-sm font-bold px-5 py-2.5 rounded-xl transition-all duration-300 ${
                             isEquipped 
                               ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 cursor-default' 
-                              : 'bg-gray-800 hover:bg-gray-700 text-white'
+                              : 'bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:scale-105'
                           }`}
                         >
                           {isEquipped ? 'Equipped' : 'Equip'}
                         </button>
                       ) : (
-                        <span className="text-xs text-gray-600 font-semibold px-3">Locked</span>
+                        <span className="text-sm text-gray-600 font-semibold px-4">Locked</span>
                       )}
                     </div>
                   );
@@ -656,21 +665,21 @@ export default function Leaderboard() {
 
             {/* SECTION 2: NAMEPLATE BORDERS */}
             <div>
-              <h4 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-3">Nameplate Borders</h4>
-              <div className="space-y-2">
+              <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Nameplate Borders</h4>
+              <div className="space-y-3">
                 {ACCESSORIES_CATALOG.borders.map((item) => {
                   const isUnlocked = userSpent >= item.threshold;
                   const neededGBP = ((item.threshold - userSpent) / 100).toFixed(2);
                   const isEquipped = equippedBorderId === item.id;
 
                   return (
-                    <div key={item.id} className={`p-3 rounded-xl border flex items-center justify-between ${item.style}`}>
+                    <div key={item.id} className={`p-4 rounded-2xl border flex items-center justify-between hover:scale-[1.01] transition-all duration-300 ${item.style}`}>
                       <div>
-                        <span className="text-sm font-semibold text-white">
+                        <span className="text-base font-semibold text-white">
                           {item.name}
                         </span>
-                        <span className="block text-[11px] text-gray-400 font-medium mt-1">
-                          {isUnlocked ? 'Unlocked' : `Spend £${neededGBP} more to unlock`}
+                        <span className="block text-xs text-gray-400 font-medium mt-2">
+                          {isUnlocked ? '✅ Unlocked' : `🔒 Spend £${neededGBP} more to unlock`}
                         </span>
                       </div>
 
@@ -678,16 +687,16 @@ export default function Leaderboard() {
                         <button
                           onClick={() => handleEquipAccessory('border', item.id)}
                           disabled={isEquipped}
-                          className={`text-xs font-bold px-4 py-2 rounded-lg transition ${
+                          className={`text-sm font-bold px-5 py-2.5 rounded-xl transition-all duration-300 ${
                             isEquipped 
                               ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 cursor-default' 
-                              : 'bg-gray-800 hover:bg-gray-700 text-white'
+                              : 'bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:scale-105'
                           }`}
                         >
                           {isEquipped ? 'Equipped' : 'Equip'}
                         </button>
                       ) : (
-                        <span className="text-xs text-gray-600 font-semibold px-3">Locked</span>
+                        <span className="text-sm text-gray-600 font-semibold px-4">Locked</span>
                       )}
                     </div>
                   );
@@ -700,32 +709,32 @@ export default function Leaderboard() {
 
       {/* EDIT PROFILE MODAL */}
       {isEditing && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-gray-900 border border-gray-800 w-full max-w-md rounded-2xl p-6 shadow-2xl relative max-h-[85vh] overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <div className="flex justify-between items-center mb-6 border-b border-gray-800 pb-4">
-              <h3 className="text-lg font-black text-white">Edit Larp Profile</h3>
-              <button onClick={() => setIsEditing(false)} className="text-gray-400 hover:text-white font-bold p-1">✕</button>
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
+          <div className="glass-strong w-full max-w-md rounded-3xl p-8 shadow-2xl relative max-h-[85vh] overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex justify-between items-center mb-8 border-b border-white/10 pb-6">
+              <h3 className="text-2xl font-black text-white">Edit Larp Profile</h3>
+              <button onClick={() => setIsEditing(false)} className="text-gray-400 hover:text-white font-bold p-2 text-xl transition-colors">✕</button>
             </div>
 
             {saveError && (
-              <div className="bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs p-3 rounded-xl mb-4 font-semibold">
+              <div className="glass bg-rose-500/10 border-rose-500/30 text-rose-400 text-sm p-4 rounded-2xl mb-6 font-semibold">
                 {saveError}
               </div>
             )}
 
-            <div className="space-y-4">
+            <div className="space-y-6">
               
               {/* DISCORD LINK & VISIBILITY TOGGLE */}
-              <div className="bg-gray-950/80 border border-gray-800/80 p-3.5 rounded-xl space-y-3">
+              <div className="glass bg-black/30 border border-white/10 p-5 rounded-2xl space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block">Discord</span>
-                    <span className="text-xs font-semibold text-cyan-400 mt-0.5 block">{discordTag || 'Not Connected'}</span>
+                    <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block">Discord</span>
+                    <span className="text-sm font-semibold text-cyan-400 mt-1 block">{discordTag || 'Not Connected'}</span>
                   </div>
                   {!hasDiscordLinked && (
                     <button 
                       onClick={handleLinkDiscord}
-                      className="bg-[#5865F2] hover:bg-[#4752C4] text-white text-xs font-bold px-3 py-1.5 rounded-lg transition shadow-md"
+                      className="bg-[#5865F2] hover:bg-[#4752C4] text-white text-sm font-bold px-4 py-2 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
                     >
                       Connect
                     </button>
@@ -733,8 +742,8 @@ export default function Leaderboard() {
                 </div>
 
                 {hasDiscordLinked && (
-                  <div className="pt-2.5 border-t border-gray-800/80 flex items-center justify-between">
-                    <span className="text-xs font-medium text-gray-300">Show Discord on Profile</span>
+                  <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+                    <span className="text-sm font-medium text-gray-300">Show Discord on Profile</span>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input 
                         type="checkbox" 
@@ -742,14 +751,14 @@ export default function Leaderboard() {
                         onChange={(e) => setEditShowDiscord(e.target.checked)}
                         className="sr-only peer"
                       />
-                      <div className="w-9 h-5 bg-gray-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#5865F2]"></div>
+                      <div className="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#5865F2] shadow-inner"></div>
                     </label>
                   </div>
                 )}
               </div>
 
               <div>
-                <label className="text-[11px] font-bold text-gray-400 uppercase tracking-widest block mb-1.5">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-2">
                   Display Name *
                 </label>
                 <input 
@@ -758,19 +767,19 @@ export default function Leaderboard() {
                   onChange={(e) => setEditName(e.target.value)}
                   maxLength={25}
                   placeholder="e.g. Larp King"
-                  className="w-full bg-gray-950 border border-gray-800 rounded-xl p-3 text-white text-sm focus:outline-none focus:border-green-400 transition"
+                  className="w-full bg-black/30 border border-white/10 rounded-2xl p-4 text-white text-sm focus:outline-none focus:border-emerald-400/50 focus:ring-2 focus:ring-emerald-400/20 transition-all duration-300"
                 />
               </div>
 
               <div>
-                <label className="text-[11px] font-bold text-gray-400 uppercase tracking-widest block mb-1.5">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-2">
                   Avatar Photo
                 </label>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-4">
                   {editAvatar && (
-                    <img src={editAvatar} alt="Preview" className="w-10 h-10 rounded-full object-cover border border-gray-700 shadow-sm" />
+                    <img src={editAvatar} alt="Preview" className="w-12 h-12 rounded-full object-cover border border-white/20 shadow-lg" />
                   )}
-                  <label className="flex-1 bg-gray-950 hover:bg-gray-800/80 border border-gray-800 text-gray-300 text-xs font-semibold py-3 px-4 rounded-xl cursor-pointer text-center transition">
+                  <label className="flex-1 bg-black/30 hover:bg-white/5 border border-white/10 text-gray-300 text-sm font-semibold py-3 px-5 rounded-2xl cursor-pointer text-center transition-all duration-300 hover:border-white/20">
                     {uploadingImage ? 'Uploading...' : 'Choose File'}
                     <input type="file" accept="image/*" onChange={handleFileUpload} disabled={uploadingImage} className="hidden" />
                   </label>
@@ -778,23 +787,23 @@ export default function Leaderboard() {
               </div>
 
               <div>
-                <label className="text-[11px] font-bold text-gray-400 uppercase tracking-widest block mb-1.5">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-2">
                   Flex Links (Up to 5)
                 </label>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {editLinks.map((link, idx) => (
-                    <div key={idx} className="flex gap-2">
+                    <div key={idx} className="flex gap-3">
                       <input 
                         type="url" 
                         value={link}
                         onChange={(e) => handleLinkChange(idx, e.target.value)}
                         placeholder={`https://link-${idx + 1}.com`}
-                        className="flex-1 bg-gray-950 border border-gray-800 rounded-xl p-2.5 text-white text-xs focus:outline-none focus:border-green-400 transition"
+                        className="flex-1 bg-black/30 border border-white/10 rounded-2xl p-3 text-white text-sm focus:outline-none focus:border-emerald-400/50 focus:ring-2 focus:ring-emerald-400/20 transition-all duration-300"
                       />
                       {editLinks.length > 1 && (
                         <button 
                           onClick={() => removeLinkField(idx)}
-                          className="bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-400 px-3 rounded-xl font-bold transition"
+                          className="bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-400 px-4 rounded-2xl font-bold transition-all duration-300 hover:scale-105"
                         >
                           ✕
                         </button>
@@ -804,7 +813,7 @@ export default function Leaderboard() {
                   {editLinks.length < 5 && (
                     <button 
                       onClick={addLinkField}
-                      className="w-full bg-gray-950 hover:bg-gray-800/80 border border-dashed border-gray-800 text-gray-400 text-xs font-semibold py-2 rounded-xl transition"
+                      className="w-full bg-black/30 hover:bg-white/5 border border-dashed border-white/10 text-gray-400 text-sm font-semibold py-3 rounded-2xl transition-all duration-300 hover:border-white/20"
                     >
                       + Add Another Link ({editLinks.length}/5)
                     </button>
@@ -813,7 +822,7 @@ export default function Leaderboard() {
               </div>
 
               <div>
-                <label className="text-[11px] font-bold text-gray-400 uppercase tracking-widest block mb-1.5">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-2">
                   Bio / Flex Quote
                 </label>
                 <textarea 
@@ -821,14 +830,14 @@ export default function Leaderboard() {
                   onChange={(e) => setEditBio(e.target.value)}
                   maxLength={100}
                   placeholder="I bought this spot just to flex."
-                  className="w-full bg-gray-950 border border-gray-800 rounded-xl p-3 text-white text-xs focus:outline-none focus:border-green-400 transition h-20 resize-none"
+                  className="w-full bg-black/30 border border-white/10 rounded-2xl p-4 text-white text-sm focus:outline-none focus:border-emerald-400/50 focus:ring-2 focus:ring-emerald-400/20 transition-all duration-300 h-24 resize-none"
                 />
               </div>
 
               <button 
                 onClick={handleSaveProfile}
                 disabled={saving || uploadingImage}
-                className="w-full bg-green-500 hover:bg-green-400 text-gray-950 font-extrabold py-3 rounded-xl transition disabled:opacity-50 mt-4 shadow-lg text-sm"
+                className="w-full bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-gray-950 font-extrabold py-4 rounded-2xl transition-all duration-300 disabled:opacity-50 mt-6 shadow-lg hover:shadow-emerald-500/25 text-sm hover:scale-[1.02]"
               >
                 {saving ? 'Saving Profile...' : 'Save Profile'}
               </button>
@@ -839,44 +848,44 @@ export default function Leaderboard() {
 
       {/* DISCORD-STYLE PROFILE MODAL (WITH CLICK ANALYTICS) */}
       {selectedProfile && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-gray-900 border border-gray-800 w-full max-w-md rounded-2xl overflow-hidden shadow-2xl relative animate-in fade-in zoom-in-95 duration-150 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
+          <div className="glass-strong w-full max-w-md rounded-3xl overflow-hidden shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             
-            <div className="h-24 bg-gradient-to-r from-green-600 to-emerald-900 relative">
+            <div className="h-32 bg-gradient-to-r from-emerald-600 via-cyan-600 to-emerald-600 relative animate-gradient">
               <button 
                 onClick={() => setSelectedProfile(null)}
-                className="absolute top-3 right-3 bg-black/40 hover:bg-black/60 text-white w-7 h-7 rounded-full flex items-center justify-center font-bold transition text-xs"
+                className="absolute top-4 right-4 bg-black/40 hover:bg-black/60 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold transition-all duration-300 text-sm hover:scale-110"
               >
                 ✕
               </button>
             </div>
 
-            <div className="px-6 relative -mt-12 mb-3 flex justify-between items-end">
+            <div className="px-8 relative -mt-16 mb-4 flex justify-between items-end">
               <img 
                 src={selectedProfile.avatar_url || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(selectedProfile.display_name || 'anon')}`} 
                 alt="Avatar" 
-                className="w-24 h-24 rounded-full bg-gray-950 border-4 border-gray-900 object-cover shadow-xl"
+                className="w-28 h-28 rounded-full bg-gray-950 border-4 border-gray-900 object-cover shadow-2xl"
               />
-              <div className="flex flex-col items-end gap-1 mb-2">
-                <div className="bg-green-500/10 border border-green-500/30 text-green-400 font-black px-3.5 py-1 rounded-full text-xs tracking-wide">
+              <div className="flex flex-col items-end gap-2 mb-3">
+                <div className="glass bg-emerald-500/10 border-emerald-500/30 text-emerald-400 font-black px-4 py-1.5 rounded-full text-sm tracking-wide shadow-[0_0_15px_rgba(16,185,129,0.15)]">
                   £{((selectedProfile.total_spent || 0) / 100).toFixed(2)} SPENT
                 </div>
                 {/* Total Click Analytics Badge */}
-                <span className="text-[11px] font-semibold text-gray-400 px-2">
+                <span className="text-xs font-semibold text-gray-400 px-3">
                   📊 {selectedProfile.total_clicks || 0} Total Clicks
                 </span>
               </div>
             </div>
 
-            <div className="p-6 pt-2">
-              <div className="flex items-center gap-2.5 mb-1 flex-wrap">
-                <h3 className="text-xl md:text-2xl font-black text-white">
+            <div className="p-8 pt-4">
+              <div className="flex items-center gap-3 mb-2 flex-wrap">
+                <h3 className="text-2xl md:text-3xl font-black text-white">
                   {selectedProfile.is_anonymous ? 'Anonymous' : selectedProfile.display_name}
                 </h3>
                 {(() => {
                   const currentTitle = ACCESSORIES_CATALOG.titles.find(t => t.id === selectedProfile.equipped_title) || ACCESSORIES_CATALOG.titles[0];
                   return (
-                    <span className={`px-2.5 py-0.5 rounded border uppercase tracking-wider ${currentTitle.style}`}>
+                    <span className={`px-3 py-1 rounded-lg border uppercase tracking-wider ${currentTitle.style}`}>
                       {currentTitle.name}
                     </span>
                   );
@@ -884,22 +893,22 @@ export default function Leaderboard() {
               </div>
 
               {selectedProfile.show_discord && selectedProfile.discord_tag && (
-                <div className="bg-[#5865F2]/10 border border-[#5865F2]/30 text-[#5865F2] px-3.5 py-2 rounded-xl font-semibold text-xs flex items-center gap-2 my-3 shadow-inner">
+                <div className="glass bg-[#5865F2]/10 border-[#5865F2]/30 text-[#5865F2] px-4 py-2.5 rounded-2xl font-semibold text-sm flex items-center gap-2 my-4 shadow-inner">
                   <span>Discord:</span>
                   <span className="text-white font-mono">@{selectedProfile.discord_tag}</span>
                 </div>
               )}
 
-              <div className="bg-gray-950/80 p-4 rounded-xl border border-gray-800/80 my-4">
-                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">
+              <div className="glass bg-black/30 p-5 rounded-2xl border border-white/10 my-5">
+                <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-2">
                   About Me
                 </span>
-                <p className="text-gray-200 text-xs italic font-normal">
+                <p className="text-gray-200 text-sm italic font-normal leading-relaxed">
                   "{selectedProfile.approved_bio || 'I bought this spot just to flex.'}"
                 </p>
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {(() => {
                   const links = (selectedProfile.flex_links && selectedProfile.flex_links.length > 0)
                     ? selectedProfile.flex_links
@@ -907,7 +916,7 @@ export default function Leaderboard() {
 
                   if (links.length === 0) {
                     return (
-                      <div className="text-center text-gray-500 text-xs py-3 border border-dashed border-gray-800 rounded-xl">
+                      <div className="text-center text-gray-500 text-sm py-4 border border-dashed border-white/10 rounded-2xl glass">
                         No URLs linked yet
                       </div>
                     );
@@ -919,7 +928,7 @@ export default function Leaderboard() {
                       href={`/api/click?to=${encodeURIComponent(linkUrl)}&id=${selectedProfile.id}`}
                       target="_blank" 
                       rel="noreferrer"
-                      className="block w-full text-center bg-gray-800/80 hover:bg-gray-800 border border-gray-700/80 hover:border-green-500/50 text-white font-bold py-2.5 rounded-xl transition text-xs truncate px-4 shadow-sm"
+                      className="block w-full text-center glass bg-white/5 hover:bg-white/10 border border-white/10 hover:border-emerald-500/50 text-white font-bold py-3 rounded-2xl transition-all duration-300 text-sm truncate px-5 hover:scale-[1.02] hover:shadow-lg"
                     >
                       {linkUrl.replace(/^https?:\/\//, '')} ↗
                     </a>
