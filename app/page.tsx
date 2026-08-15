@@ -320,13 +320,35 @@ export default function Leaderboard() {
       if (error) throw error;
 
       setIsEditing(false);
+      
+      // Tell React to instantly update the header profile state
       setUserProfile((prev: any) => ({
         ...prev,
+        display_name: cleanName,
+        avatar_url: editAvatar.trim(),
+        approved_bio: editBio.trim(),
+        approved_url: cleanLinks[0] || '',
+        flex_links: cleanLinks,
         discord_tag: discordTag,
         show_discord: editShowDiscord,
         verification_status: newStatus,
         admin_feedback: ''
       }));
+
+      // Tell React to instantly update the leaderboard UI 
+      setProfiles((prev) => 
+        prev.map((p) => 
+          p.id === user.id ? { 
+            ...p, 
+            display_name: cleanName,
+            avatar_url: editAvatar.trim(),
+            approved_bio: editBio.trim(),
+            approved_url: cleanLinks[0] || '',
+            flex_links: cleanLinks,
+          } : p
+        )
+      );
+
       fetchLeaderboard();
     } catch (err: any) {
       setSaveError(err.message || 'Failed to save profile.');
