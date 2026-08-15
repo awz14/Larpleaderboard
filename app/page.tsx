@@ -541,14 +541,14 @@ export default function Leaderboard() {
                 disabled={loading || cryptoLoading}
                 className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-gray-950 font-extrabold py-4 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-emerald-500/25 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 text-sm flex items-center justify-center gap-2"
               >
-                <span>💳</span> {loading ? 'Processing...' : 'Pay with Card'}
+                <span></span> {loading ? 'Processing...' : 'Pay with Card'}
               </button>
               <button 
                 onClick={handleCryptoCheckout}
                 disabled={loading || cryptoLoading}
                 className="bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-400 hover:to-purple-400 text-gray-950 font-extrabold py-4 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-cyan-500/25 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 text-sm flex items-center justify-center gap-2"
               >
-                <span>🪙</span> {cryptoLoading ? 'Processing...' : 'Pay with Crypto'}
+                <span></span> {cryptoLoading ? 'Processing...' : 'Pay with Crypto'}
               </button>
             </div>
           </div>
