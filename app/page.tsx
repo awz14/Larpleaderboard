@@ -322,9 +322,15 @@ export default function Leaderboard() {
       return;
     }
 
+    const parsedAmount = parseFloat(amount);
+    if (isNaN(parsedAmount) || parsedAmount < 2.50) {
+      alert('The minimum spot claim amount is £2.50');
+      return;
+    }
+
     setLoading(true);
     try {
-      const amountInCents = parseInt(amount) * 100;
+      const amountInCents = Math.round(parsedAmount * 100);
       const res = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -355,16 +361,21 @@ export default function Leaderboard() {
       return;
     }
 
+    const parsedAmount = parseFloat(amount);
+    if (isNaN(parsedAmount) || parsedAmount < 2.50) {
+      alert('The minimum spot claim amount is £2.50');
+      return;
+    }
+
     setCryptoLoading(true);
     try {
-      const amountInCents = parseInt(amount) * 100;
+      const amountInCents = Math.round(parsedAmount * 100);
       const res = await fetch('/api/crypto-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amountInCents, userId: user.id }),
       });
       
-      // PARSE THE JSON BEFORE CHECKING res.ok TO REVEAL THE EXACT ERROR
       let data;
       try { 
         data = await res.json(); 
@@ -373,7 +384,6 @@ export default function Leaderboard() {
       }
       
       if (!res.ok) {
-        // Pop up the exact NOWPayments error on the screen
         throw new Error(data.error || 'Failed to initialize crypto checkout session');
       }
 
@@ -384,7 +394,6 @@ export default function Leaderboard() {
       }
     } catch (error: any) {
       console.error('Crypto checkout error:', error);
-      // Alerts the exact error string returned from the backend
       alert(`Gateway Error: ${error.message}`);
     } finally {
       setCryptoLoading(false);
@@ -392,7 +401,7 @@ export default function Leaderboard() {
   };
 
   const addAmount = (val: number) => {
-    const current = parseInt(amount) || 0;
+    const current = parseFloat(amount) || 0;
     setAmount((current + val).toString());
   };
 
@@ -531,7 +540,8 @@ export default function Leaderboard() {
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 className="w-full bg-black/30 border border-white/10 text-white rounded-2xl py-4 pl-10 pr-5 font-bold text-lg focus:outline-none focus:border-emerald-400/50 focus:ring-2 focus:ring-emerald-400/20 transition-all duration-300 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                min="1"
+                min="2.50"
+                step="0.10"
               />
             </div>
             
@@ -541,14 +551,14 @@ export default function Leaderboard() {
                 disabled={loading || cryptoLoading}
                 className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-gray-950 font-extrabold py-4 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-emerald-500/25 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 text-sm flex items-center justify-center gap-2"
               >
-                <span></span> {loading ? 'Processing...' : 'Pay with Card'}
+                {loading ? 'Processing...' : 'Pay with Card'}
               </button>
               <button 
                 onClick={handleCryptoCheckout}
                 disabled={loading || cryptoLoading}
                 className="bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-400 hover:to-purple-400 text-gray-950 font-extrabold py-4 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-cyan-500/25 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 text-sm flex items-center justify-center gap-2"
               >
-                <span></span> {cryptoLoading ? 'Processing...' : 'Pay with Crypto'}
+                {cryptoLoading ? 'Processing...' : 'Pay with Crypto'}
               </button>
             </div>
           </div>

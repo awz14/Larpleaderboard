@@ -3,6 +3,12 @@ import { NextResponse } from 'next/server';
 export async function POST(req: Request) {
   try {
     const { amountInCents, userId } = await req.json();
+    
+    // BACKEND SECURITY CHECK: Reject anything under £2.50 (250 cents)
+    if (!amountInCents || amountInCents < 250) {
+      return NextResponse.json({ error: 'Minimum checkout amount is £2.50' }, { status: 400 });
+    }
+
     const amountInGBP = amountInCents / 100;
 
     // Grab the URL from Vercel
