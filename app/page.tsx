@@ -23,6 +23,7 @@ const ACCESSORIES_CATALOG = {
 
 export default function Leaderboard() {
   const [profiles, setProfiles] = useState<any[]>([]);
+  const [totalLarped, setTotalLarped] = useState(0); // NEW: Global total counter
   const [amount, setAmount] = useState('50'); 
   const [loading, setLoading] = useState(false);
   const [cryptoLoading, setCryptoLoading] = useState(false);
@@ -55,6 +56,18 @@ export default function Leaderboard() {
   const [equippedBorderId, setEquippedBorderId] = useState('border_standard');
 
   const fetchLeaderboard = async () => {
+    // 1. Fetch total money larped across ALL profiles
+    const { data: totalData } = await supabase
+      .from('profiles')
+      .select('total_spent')
+      .gt('total_spent', 0);
+      
+    if (totalData) {
+      const grandTotal = totalData.reduce((sum, profile) => sum + (profile.total_spent || 0), 0);
+      setTotalLarped(grandTotal);
+    }
+
+    // 2. Fetch the top 100 for the leaderboard UI
     const { data } = await supabase
       .from('profiles')
       .select('*')
@@ -81,6 +94,14 @@ export default function Leaderboard() {
   useEffect(() => {
     fetchLeaderboard();
     fetchAnnouncements();
+
+    // LIVE SUPABASE REALTIME SUBSCRIPTION
+    const profilesChannel = supabase
+      .channel('live-leaderboard')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'profiles' }, () => {
+        fetchLeaderboard(); // Instantly refresh the board and total when anyone pays
+      })
+      .subscribe();
 
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -135,6 +156,7 @@ export default function Leaderboard() {
 
     return () => {
       authListener.subscription.unsubscribe();
+      supabase.removeChannel(profilesChannel); // Cleanup real-time channel
     };
   }, []);
 
@@ -526,7 +548,13 @@ export default function Leaderboard() {
           <h1 className="text-5xl md:text-7xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 uppercase tracking-tight animate-gradient">
             LarpLeaderboard
           </h1>
-          <p className="text-base md:text-lg text-gray-400 font-medium tracking-wide">Buy your spot. Flex your link.</p>
+          <p className="text-base md:text-lg text-gray-400 font-medium tracking-wide mb-8">Buy your spot. Flex your link.</p>
+          
+          {/* TOTAL MONEY LARPED COUNTER */}
+          <div className="inline-block glass-strong bg-emerald-500/10 border border-emerald-500/30 px-8 py-4 rounded-3xl shadow-[0_0_30px_rgba(16,185,129,0.15)] animate-pulse-glow">
+            <span className="text-xs font-bold text-emerald-400 uppercase tracking-widest block mb-1">Total Money Larped</span>
+            <span className="text-4xl md:text-5xl font-black text-white tracking-tight">£{((totalLarped || 0) / 100).toFixed(2)}</span>
+          </div>
         </div>
         
         <div className="glass-strong p-8 md:p-10 rounded-3xl mb-16 flex flex-col items-center shadow-2xl animate-gradient">
