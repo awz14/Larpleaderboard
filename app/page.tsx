@@ -25,6 +25,7 @@ export default function Leaderboard() {
   const [profiles, setProfiles] = useState<any[]>([]);
   const [amount, setAmount] = useState('50'); 
   const [loading, setLoading] = useState(false);
+  const [cryptoLoading, setCryptoLoading] = useState(false);
   const [selectedProfile, setSelectedProfile] = useState<any | null>(null);
   const [user, setUser] = useState<any | null>(null);
   const [userProfile, setUserProfile] = useState<any | null>(null);
@@ -322,7 +323,7 @@ export default function Leaderboard() {
 
   const handleCheckout = async () => {
     if (!user) {
-      alert('Please sign in first so we can attach the spot to your profile!');
+      alert('Authentication required: Please sign in to attach this transaction to your profile.');
       return;
     }
 
@@ -335,14 +336,50 @@ export default function Leaderboard() {
         body: JSON.stringify({ amountInCents, userId: user.id }),
       });
       
+      if (!res.ok) throw new Error('Failed to initialize checkout session');
+
       const data = await res.json();
       if (data.url) {
         window.location.href = data.url;
+      } else {
+        throw new Error(data.error || 'Invalid gateway response');
       }
-    } catch (error) {
-      console.error('Checkout failed:', error);
+    } catch (error: any) {
+      console.error('Checkout error:', error);
+      alert(error.message || 'Checkout failed. Please try again.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleCryptoCheckout = async () => {
+    if (!user) {
+      alert('Authentication required: Please sign in to attach this transaction to your profile.');
+      return;
+    }
+
+    setCryptoLoading(true);
+    try {
+      const amountInCents = parseInt(amount) * 100;
+      const res = await fetch('/api/crypto-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amountInCents, userId: user.id }),
+      });
+      
+      if (!res.ok) throw new Error('Failed to initialize crypto checkout session');
+
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error(data.error || 'Invalid gateway response');
+      }
+    } catch (error: any) {
+      console.error('Crypto checkout error:', error);
+      alert(error.message || 'Crypto checkout failed. Please try again.');
+    } finally {
+      setCryptoLoading(false);
     }
   };
 
@@ -484,7 +521,7 @@ export default function Leaderboard() {
         <div className="glass-strong p-8 md:p-10 rounded-3xl mb-16 flex flex-col items-center shadow-2xl animate-gradient">
           <h2 className="text-xl font-bold mb-6 text-gray-200 tracking-wide">Claim Your Spot</h2>
           
-          <div className="flex gap-4 w-full max-w-md mb-6">
+          <div className="w-full max-w-md mb-6 space-y-4">
             <div className="relative w-full">
               <span className="absolute left-5 top-4 text-gray-400 font-bold text-lg">£</span>
               <input 
@@ -495,13 +532,23 @@ export default function Leaderboard() {
                 min="1"
               />
             </div>
-            <button 
-              onClick={handleCheckout}
-              disabled={loading}
-              className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-gray-950 font-extrabold px-8 py-4 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-emerald-500/25 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105"
-            >
-              {loading ? 'Processing...' : 'Pay Now'}
-            </button>
+            
+            <div className="grid grid-cols-2 gap-3">
+              <button 
+                onClick={handleCheckout}
+                disabled={loading || cryptoLoading}
+                className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-gray-950 font-extrabold py-4 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-emerald-500/25 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 text-sm flex items-center justify-center gap-2"
+              >
+                <span>💳</span> {loading ? 'Processing...' : 'Pay with Card'}
+              </button>
+              <button 
+                onClick={handleCryptoCheckout}
+                disabled={loading || cryptoLoading}
+                className="bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-400 hover:to-purple-400 text-gray-950 font-extrabold py-4 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-cyan-500/25 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 text-sm flex items-center justify-center gap-2"
+              >
+                <span>🪙</span> {cryptoLoading ? 'Processing...' : 'Pay with Crypto'}
+              </button>
+            </div>
           </div>
 
           <div className="flex gap-3 text-xs font-bold flex-wrap justify-center">
