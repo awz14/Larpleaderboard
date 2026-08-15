@@ -31,21 +31,17 @@ export default function Leaderboard() {
   const [userProfile, setUserProfile] = useState<any | null>(null);
   const [userSpent, setUserSpent] = useState(0);
 
-  // Identity Tracking
   const [hasDiscordLinked, setHasDiscordLinked] = useState(false);
   const [discordTag, setDiscordTag] = useState('');
 
-  // Admin & Announcements States
   const [isAdmin, setIsAdmin] = useState(false);
   const [announcements, setAnnouncements] = useState<any[]>([]);
   const [activeBanner, setActiveBanner] = useState<any | null>(null);
 
-  // Modal States
   const [isEditing, setIsEditing] = useState(false);
   const [isLockerOpen, setIsLockerOpen] = useState(false);
   const [isNewsOpen, setIsNewsOpen] = useState(false);
 
-  // Edit Profile Form
   const [editName, setEditName] = useState('');
   const [editAvatar, setEditAvatar] = useState('');
   const [editBio, setEditBio] = useState('');
@@ -55,7 +51,6 @@ export default function Leaderboard() {
   const [saveError, setSaveError] = useState('');
   const [saving, setSaving] = useState(false);
 
-  // Equipped Accessories
   const [equippedTitleId, setEquippedTitleId] = useState('title_rookie');
   const [equippedBorderId, setEquippedBorderId] = useState('border_standard');
 
@@ -336,13 +331,15 @@ export default function Leaderboard() {
         body: JSON.stringify({ amountInCents, userId: user.id }),
       });
       
-      if (!res.ok) throw new Error('Failed to initialize checkout session');
+      let data;
+      try { data = await res.json(); } catch(e) { throw new Error("Failed to parse response"); }
+      
+      if (!res.ok) throw new Error(data.error || 'Failed to initialize checkout session');
 
-      const data = await res.json();
       if (data.url) {
         window.location.href = data.url;
       } else {
-        throw new Error(data.error || 'Invalid gateway response');
+        throw new Error('Invalid gateway response');
       }
     } catch (error: any) {
       console.error('Checkout error:', error);
@@ -367,17 +364,28 @@ export default function Leaderboard() {
         body: JSON.stringify({ amountInCents, userId: user.id }),
       });
       
-      if (!res.ok) throw new Error('Failed to initialize crypto checkout session');
+      // PARSE THE JSON BEFORE CHECKING res.ok TO REVEAL THE EXACT ERROR
+      let data;
+      try { 
+        data = await res.json(); 
+      } catch(e) { 
+        throw new Error("Failed to parse backend response"); 
+      }
+      
+      if (!res.ok) {
+        // Pop up the exact NOWPayments error on the screen
+        throw new Error(data.error || 'Failed to initialize crypto checkout session');
+      }
 
-      const data = await res.json();
       if (data.url) {
         window.location.href = data.url;
       } else {
-        throw new Error(data.error || 'Invalid gateway response');
+        throw new Error('Invalid gateway response: No URL returned');
       }
     } catch (error: any) {
       console.error('Crypto checkout error:', error);
-      alert(error.message || 'Crypto checkout failed. Please try again.');
+      // Alerts the exact error string returned from the backend
+      alert(`Gateway Error: ${error.message}`);
     } finally {
       setCryptoLoading(false);
     }
@@ -391,14 +399,12 @@ export default function Leaderboard() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-gray-100 p-6 md:p-12 font-sans selection:bg-emerald-500/20 selection:text-emerald-300 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden relative overflow-hidden">
       
-      {/* Background gradient orbs */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 -left-32 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-float"></div>
         <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-3xl"></div>
       </div>
 
-      {/* ACTIVE ANNOUNCEMENT BANNER */}
       {activeBanner && (
         <div 
           onClick={() => setIsNewsOpen(true)}
@@ -409,7 +415,6 @@ export default function Leaderboard() {
         </div>
       )}
 
-      {/* USER VIP VERIFICATION STATUS BANNER (£250+) */}
       {userProfile && userSpent >= 25000 && (
         <div className="max-w-4xl mx-auto mb-8">
           {userProfile.verification_status === 'pending' && (
@@ -435,7 +440,6 @@ export default function Leaderboard() {
 
       <div className="max-w-4xl mx-auto relative z-10">
         
-        {/* TOP NAVBAR */}
         <header className="flex justify-between items-center mb-16 pb-8 border-b border-white/10">
           <div className="text-2xl font-black tracking-[0.2em] text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
             LARP<span className="text-white">BOARD</span>
@@ -509,7 +513,6 @@ export default function Leaderboard() {
           </div>
         </header>
 
-        {/* HERO TITLE */}
         <div className="text-center mb-12">
           <h1 className="text-5xl md:text-7xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 uppercase tracking-tight animate-gradient">
             LarpLeaderboard
@@ -517,7 +520,6 @@ export default function Leaderboard() {
           <p className="text-base md:text-lg text-gray-400 font-medium tracking-wide">Buy your spot. Flex your link.</p>
         </div>
         
-        {/* CHECKOUT SECTION */}
         <div className="glass-strong p-8 md:p-10 rounded-3xl mb-16 flex flex-col items-center shadow-2xl animate-gradient">
           <h2 className="text-xl font-bold mb-6 text-gray-200 tracking-wide">Claim Your Spot</h2>
           
@@ -567,7 +569,6 @@ export default function Leaderboard() {
           </div>
         </div>
 
-        {/* THE LEADERBOARD */}
         <div className="flex flex-col gap-4">
           {profiles.length === 0 ? (
             <div className="glass text-center text-gray-500 font-semibold p-16 border border-dashed border-white/10 rounded-3xl">
@@ -624,7 +625,6 @@ export default function Leaderboard() {
         </div>
       </div>
 
-      {/* ANNOUNCEMENT NEWS FEED MODAL */}
       {isNewsOpen && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
           <div className="glass-strong w-full max-w-lg rounded-3xl p-8 shadow-2xl relative max-h-[85vh] overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -657,7 +657,6 @@ export default function Leaderboard() {
         </div>
       )}
 
-      {/* ACCESSORIES LOCKER MODAL */}
       {isLockerOpen && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
           <div className="glass-strong w-full max-w-lg rounded-3xl p-8 shadow-2xl relative max-h-[85vh] overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -669,7 +668,6 @@ export default function Leaderboard() {
               <button onClick={() => setIsLockerOpen(false)} className="text-gray-400 hover:text-white font-bold p-2 text-xl transition-colors">✕</button>
             </div>
 
-            {/* SECTION 1: TITLE BADGES */}
             <div className="mb-8">
               <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Title Badges</h4>
               <div className="space-y-3">
@@ -710,7 +708,6 @@ export default function Leaderboard() {
               </div>
             </div>
 
-            {/* SECTION 2: NAMEPLATE BORDERS */}
             <div>
               <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Nameplate Borders</h4>
               <div className="space-y-3">
@@ -754,7 +751,6 @@ export default function Leaderboard() {
         </div>
       )}
 
-      {/* EDIT PROFILE MODAL */}
       {isEditing && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
           <div className="glass-strong w-full max-w-md rounded-3xl p-8 shadow-2xl relative max-h-[85vh] overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -771,7 +767,6 @@ export default function Leaderboard() {
 
             <div className="space-y-6">
               
-              {/* DISCORD LINK & VISIBILITY TOGGLE */}
               <div className="glass bg-black/30 border border-white/10 p-5 rounded-2xl space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
@@ -893,7 +888,6 @@ export default function Leaderboard() {
         </div>
       )}
 
-      {/* DISCORD-STYLE PROFILE MODAL (WITH CLICK ANALYTICS) */}
       {selectedProfile && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
           <div className="glass-strong w-full max-w-md rounded-3xl overflow-hidden shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -917,7 +911,6 @@ export default function Leaderboard() {
                 <div className="glass bg-emerald-500/10 border-emerald-500/30 text-emerald-400 font-black px-4 py-1.5 rounded-full text-sm tracking-wide shadow-[0_0_15px_rgba(16,185,129,0.15)]">
                   £{((selectedProfile.total_spent || 0) / 100).toFixed(2)} SPENT
                 </div>
-                {/* Total Click Analytics Badge */}
                 <span className="text-xs font-semibold text-gray-400 px-3">
                   📊 {selectedProfile.total_clicks || 0} Total Clicks
                 </span>
