@@ -311,7 +311,6 @@ export default function AdminDashboard() {
             <div className="space-y-3">
               {announcements.map((a) => (
                 
-                {/* RESPONSIVE ANNOUNCEMENTS FIX */}
                 <div key={a.id} className="glass bg-black/30 border border-white/10 p-4 sm:p-5 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 hover:border-white/20 transition-all duration-300">
                   <div className="w-full md:w-auto">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 mb-2">
