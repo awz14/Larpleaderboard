@@ -321,7 +321,6 @@ export default function Leaderboard() {
 
       setIsEditing(false);
       
-      // Tell React to instantly update the header profile state
       setUserProfile((prev: any) => ({
         ...prev,
         display_name: cleanName,
@@ -335,7 +334,6 @@ export default function Leaderboard() {
         admin_feedback: ''
       }));
 
-      // Tell React to instantly update the leaderboard UI 
       setProfiles((prev) => 
         prev.map((p) => 
           p.id === user.id ? { 
@@ -490,7 +488,6 @@ export default function Leaderboard() {
 
       <div className="max-w-4xl mx-auto relative z-10">
         
-        {/* RESPONSIVE HEADER FIX */}
         <header className="flex flex-col lg:flex-row justify-between items-center gap-6 mb-10 md:mb-16 pb-6 md:pb-8 border-b border-white/10 w-full">
           <div className="text-2xl md:text-3xl font-black tracking-[0.2em] text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 text-center">
             LARP<span className="text-white">BOARD</span>
@@ -567,7 +564,6 @@ export default function Leaderboard() {
           </div>
         </header>
 
-        {/* RESPONSIVE TITLE FIX */}
         <div className="text-center mb-10 md:mb-12">
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 uppercase tracking-tight animate-gradient break-words px-2">
             LarpLeaderboard
@@ -596,7 +592,6 @@ export default function Leaderboard() {
               />
             </div>
             
-            {/* RESPONSIVE BUTTON GRID FIX */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <button 
                 onClick={handleCheckout}
@@ -1044,6 +1039,14 @@ export default function Leaderboard() {
           </div>
         </div>
       )}
+
+      {/* Support Footer */}
+      <footer className="relative z-10 pb-8 mt-4 text-center">
+        <p className="text-xs sm:text-sm text-gray-500 font-medium">
+          Need help? Contact support at <a href="mailto:larpflip@gmail.com" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-500/30 underline-offset-4 transition-colors">larpflip@gmail.com</a>
+        </p>
+      </footer>
+      
     </main>
   );
 }
