@@ -19,6 +19,16 @@
   box-sizing: border-box;
 }
 
+/* Hide global scrollbar but keep scrolling functionality */
+html, body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
 body {
   background: linear-gradient(135deg, #0a0a0a 0%, #111111 50%, #0a0a0a 100%);
   color: var(--foreground);
